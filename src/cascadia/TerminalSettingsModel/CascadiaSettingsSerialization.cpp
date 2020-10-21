@@ -22,7 +22,6 @@ using namespace winrt::Microsoft::Terminal::Settings::Model::implementation;
 using namespace ::Microsoft::Console;
 
 static constexpr std::wstring_view SettingsFilename{ L"settings.json" };
-static constexpr std::wstring_view LegacySettingsFilename{ L"profiles.json" };
 static constexpr std::wstring_view UnpackagedSettingsFolderName{ L"Microsoft\\Windows Terminal\\" };
 
 static constexpr std::wstring_view DefaultsFilename{ L"defaults.json" };
@@ -829,54 +828,7 @@ std::optional<std::string> CascadiaSettings::_ReadUserSettings()
 
     if (!hFile)
     {
-        // GH#5186 - We moved from profiles.json to settings.json; we want to
-        // migrate any file we find. We're using MoveFile in case their settings.json
-        // is a symbolic link.
-        std::filesystem::path pathToLegacySettingsFile{ std::wstring_view{ pathToSettingsFile } };
-        pathToLegacySettingsFile.replace_filename(LegacySettingsFilename);
-
-        wil::unique_hfile hLegacyFile{ CreateFileW(pathToLegacySettingsFile.c_str(),
-                                                   GENERIC_READ,
-                                                   FILE_SHARE_READ | FILE_SHARE_WRITE,
-                                                   nullptr,
-                                                   OPEN_EXISTING,
-                                                   FILE_ATTRIBUTE_NORMAL,
-                                                   nullptr) };
-
-        if (hLegacyFile)
-        {
-            // Close the file handle, move it, and re-open the file in its new location.
-            hLegacyFile.reset();
-
-            // Note: We're unsure if this is unsafe. Theoretically it's possible
-            // that two instances of the app will try and move the settings file
-            // simultaneously. We don't know what might happen in that scenario,
-            // but we're also not sure how to safely lock the file to prevent
-            // that from occurring.
-            THROW_LAST_ERROR_IF(!MoveFile(pathToLegacySettingsFile.c_str(),
-                                          pathToSettingsFile.c_str()));
-
-            hFile.reset(CreateFileW(pathToSettingsFile.c_str(),
-                                    GENERIC_READ,
-                                    FILE_SHARE_READ | FILE_SHARE_WRITE,
-                                    nullptr,
-                                    OPEN_EXISTING,
-                                    FILE_ATTRIBUTE_NORMAL,
-                                    nullptr));
-
-            // hFile shouldn't be INVALID. That's unexpected - We just moved the
-            // file, we should be able to open it. Throw the error so we can get
-            // some information here.
-            THROW_LAST_ERROR_IF(!hFile);
-        }
-        else
-        {
-            // If the roaming file didn't exist, and the local file doesn't exist,
-            //      that's fine. Just log the error and return nullopt - we'll
-            //      create the defaults.
-            LOG_LAST_ERROR();
-            return std::nullopt;
-        }
+        return std::nullopt;
     }
 
     return _ReadFile(hFile.get());
