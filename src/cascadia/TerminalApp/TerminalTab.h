@@ -81,6 +81,9 @@ namespace winrt::TerminalApp::implementation
         winrt::Windows::UI::Xaml::Controls::MenuFlyoutItem _closeOtherTabsMenuItem{};
         winrt::Windows::UI::Xaml::Controls::MenuFlyoutItem _closeTabsAfterMenuItem{};
 
+        Windows::Foundation::Collections::IVector<uint16_t> _mruPanes;
+        uint16_t _nextPaneId{ 0 };
+
         bool _receivedKeyDown{ false };
 
         winrt::hstring _runtimeTabText{};
