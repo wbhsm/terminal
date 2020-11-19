@@ -110,6 +110,7 @@ namespace winrt::TerminalApp::implementation
             if (lastFocusedControl)
             {
                 lastFocusedControl.Focus(_focusState);
+                lastFocusedControl.TaskbarProgressChanged();
             }
         }
     }
@@ -522,6 +523,16 @@ namespace winrt::TerminalApp::implementation
                 }
             }
         });
+
+        // Add a PaneRaiseVisualBell event handler to the Pane. When the pane emits this event,
+        // we need to bubble it all the way to app host. In this part of the chain we bubble it
+        // from the hosting tab to the page.
+        pane->PaneRaiseVisualBell([weakThis](auto&& /*s*/) {
+            if (auto tab{ weakThis.get() })
+            {
+                tab->_TabRaiseVisualBellHandlers();
+            }
+        });
     }
 
     // Method Description:
@@ -895,6 +906,8 @@ namespace winrt::TerminalApp::implementation
         TabViewItem().Resources().Insert(winrt::box_value(L"TabViewItemHeaderForegroundPointerOver"), fontBrush);
         TabViewItem().Resources().Insert(winrt::box_value(L"TabViewItemHeaderForegroundPressed"), fontBrush);
         TabViewItem().Resources().Insert(winrt::box_value(L"TabViewButtonForegroundActiveTab"), fontBrush);
+        TabViewItem().Resources().Insert(winrt::box_value(L"TabViewButtonForegroundPressed"), fontBrush);
+        TabViewItem().Resources().Insert(winrt::box_value(L"TabViewButtonForegroundPointerOver"), fontBrush);
 
         _RefreshVisualState();
 
@@ -1059,4 +1072,5 @@ namespace winrt::TerminalApp::implementation
     DEFINE_EVENT(TerminalTab, ActivePaneChanged, _ActivePaneChangedHandlers, winrt::delegate<>);
     DEFINE_EVENT(TerminalTab, ColorSelected, _colorSelected, winrt::delegate<winrt::Windows::UI::Color>);
     DEFINE_EVENT(TerminalTab, ColorCleared, _colorCleared, winrt::delegate<>);
+    DEFINE_EVENT(TerminalTab, TabRaiseVisualBell, _TabRaiseVisualBellHandlers, winrt::delegate<>);
 }
