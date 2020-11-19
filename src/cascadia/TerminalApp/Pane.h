@@ -162,6 +162,8 @@ private:
     // - This is used for pane resizing (which will need a pane separator
     //   that's perpendicular to the direction to be able to move the separator
     //   in that direction).
+    // - Additionally, it will be used for moving focus between panes, which
+    //   again happens _across_ a separator.
     // Arguments:
     // - direction: The Direction to compare
     // - splitType: The winrt::TerminalApp::SplitState to compare

@@ -337,7 +337,7 @@ JSON_ENUM_MAPPER(::winrt::Microsoft::Terminal::Settings::Model::Direction)
         pair_type{ "left", ValueType::Left },
         pair_type{ "right", ValueType::Right },
         pair_type{ "up", ValueType::Up },
-        pair_type{ "down", ValueType::Down }
+        pair_type{ "down", ValueType::Down },
     };
 };
 

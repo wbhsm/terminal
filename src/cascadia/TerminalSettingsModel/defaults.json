@@ -331,6 +331,8 @@
         { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" },
         { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" },
         { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" },
+        { "command": "nextPane", "keys": "ctrl+alt+right" },
+        { "command": "prevPane", "keys": "ctrl+alt+left" },
         { "command": "togglePaneZoom" },
 
         // Clipboard Integration
