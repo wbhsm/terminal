@@ -322,11 +322,10 @@ namespace winrt::TerminalApp::implementation
         _rootPane->ResizePane(direction);
     }
 
-
     // Method Description:
     // - Focuses either the last or most recently used pane
     // Arguments:
-    // - focusNext: if true we focus the most recently used pane, 
+    // - focusNext: if true we focus the most recently used pane,
     //              if false we focus the least recently used pane
     void TerminalTab::FocusPane(const bool focusNext)
     {
