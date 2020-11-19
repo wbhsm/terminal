@@ -108,18 +108,7 @@
       ],
       "type": "string"
     },
-    "FocusDirection": {
-      "enum": [
-        "left",
-        "right",
-        "up",
-        "down",
-        "next",
-        "previous"
-      ],
-      "type": "string"
-    },
-    "ResizeDirection": {
+    "Direction": {
       "enum": [
         "left",
         "right",
@@ -289,9 +278,9 @@
           "properties": {
             "action": { "type": "string", "pattern": "moveFocus" },
             "direction": {
-              "$ref": "#/definitions/FocusDirection",
+              "$ref": "#/definitions/Direction",
               "default": "left",
-              "description": "The direction to move focus in, between panes. Direction can be 'previous' to move to the most recently used pane or 'next' to move to the least recently used pane."
+              "description": "The direction to move focus in, between panes."
             }
           }
         }
@@ -306,7 +295,7 @@
           "properties": {
             "action": { "type": "string", "pattern": "resizePane" },
             "direction": {
-              "$ref": "#/definitions/ResizeDirection",
+              "$ref": "#/definitions/Direction",
               "default": "left",
               "description": "The direction to move the pane separator in."
             }

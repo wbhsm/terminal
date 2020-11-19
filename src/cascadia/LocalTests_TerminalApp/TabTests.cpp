@@ -664,7 +664,7 @@ namespace TerminalAppLocalTests
         Log::Comment(L"Move focus. This will cause us to un-zoom.");
         result = RunOnUIThread([&page]() {
             // Set up action
-            MoveFocusArgs args{ FocusDirection::Left };
+            MoveFocusArgs args{ Direction::Left };
             ActionEventArgs eventArgs{ args };
 
             page->_HandleMoveFocus(nullptr, eventArgs);
