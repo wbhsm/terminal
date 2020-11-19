@@ -104,6 +104,8 @@
         "togglePaneZoom",
         "toggleRetroEffect",
         "wt",
+        "nextPane",
+        "prevPane",
         "unbound"
       ],
       "type": "string"
