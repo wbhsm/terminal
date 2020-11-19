@@ -919,6 +919,8 @@ namespace winrt::TerminalApp::implementation
         _actionDispatch->CloseOtherTabs({ this, &TerminalPage::_HandleCloseOtherTabs });
         _actionDispatch->CloseTabsAfter({ this, &TerminalPage::_HandleCloseTabsAfter });
         _actionDispatch->TabSearch({ this, &TerminalPage::_HandleOpenTabSearch });
+        _actionDispatch->NextPane({ this, &TerminalPage::_HandleNextPane });
+        _actionDispatch->PrevPane({ this, &TerminalPage::_HandlePrevPane });
     }
 
     // Method Description:
@@ -1288,6 +1290,23 @@ namespace winrt::TerminalApp::implementation
     }
 
     // Method Description:
+    // - Focuses either the last or most recently used pane
+    // Arguments:
+    // - focusNext: if true we focus the most recently used pane, if
+    //              false we focus the least recently used pane
+    void TerminalPage::_FocusPane(const bool focusNext)
+    {
+        if (auto index{ _GetFocusedTabIndex() })
+        {
+            if (auto terminalTab = _GetTerminalTabImpl(_tabs.GetAt(*index)))
+            {
+                _UnZoomIfNeeded();
+                terminalTab->FocusPane(focusNext);
+            }
+        }
+    }
+
+    // Method Description:
     // - Sets focus to the desired tab. Returns false if the provided tabIndex
     //   is greater than the number of tabs we have.
     // - During startup, we'll immediately set the selected tab as focused.
@@ -1358,7 +1377,7 @@ namespace winrt::TerminalApp::implementation
     // - direction: The direction to move the focus in.
     // Return Value:
     // - <none>
-    void TerminalPage::_MoveFocus(const FocusDirection& direction)
+    void TerminalPage::_MoveFocus(const Direction& direction)
     {
         if (auto index{ _GetFocusedTabIndex() })
         {
@@ -1628,7 +1647,7 @@ namespace winrt::TerminalApp::implementation
     // - direction: The direction to move the separator in.
     // Return Value:
     // - <none>
-    void TerminalPage::_ResizePane(const ResizeDirection& direction)
+    void TerminalPage::_ResizePane(const Direction& direction)
     {
         if (auto index{ _GetFocusedTabIndex() })
         {

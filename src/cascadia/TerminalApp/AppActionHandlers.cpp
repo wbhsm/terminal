@@ -214,14 +214,14 @@ namespace winrt::TerminalApp::implementation
     {
         if (const auto& realArgs = args.ActionArgs().try_as<ResizePaneArgs>())
         {
-            if (realArgs.ResizeDirection() == ResizeDirection::None)
+            if (realArgs.Direction() == Direction::None)
             {
                 // Do nothing
                 args.Handled(false);
             }
             else
             {
-                _ResizePane(realArgs.ResizeDirection());
+                _ResizePane(realArgs.Direction());
                 args.Handled(true);
             }
         }
@@ -232,14 +232,14 @@ namespace winrt::TerminalApp::implementation
     {
         if (const auto& realArgs = args.ActionArgs().try_as<MoveFocusArgs>())
         {
-            if (realArgs.FocusDirection() == FocusDirection::None)
+            if (realArgs.Direction() == Direction::None)
             {
                 // Do nothing
                 args.Handled(false);
             }
             else
             {
-                _MoveFocus(realArgs.FocusDirection());
+                _MoveFocus(realArgs.Direction());
                 args.Handled(true);
             }
         }
@@ -532,6 +532,20 @@ namespace winrt::TerminalApp::implementation
         CommandPalette().EnableTabSwitcherMode(true, startIdx);
         CommandPalette().Visibility(Visibility::Visible);
 
+        args.Handled(true);
+    }
+
+    void TerminalPage::_HandleNextPane(const IInspectable& /*sender*/,
+                                       const ActionEventArgs& args)
+    {
+        _FocusPane(true);
+        args.Handled(true);
+    }
+
+    void TerminalPage::_HandlePrevPane(const IInspectable& /*sender*/,
+                                       const ActionEventArgs& args)
+    {
+        _FocusPane(false);
         args.Handled(true);
     }
 }

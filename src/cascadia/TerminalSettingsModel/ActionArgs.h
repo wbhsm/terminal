@@ -216,7 +216,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
     struct ResizePaneArgs : public ResizePaneArgsT<ResizePaneArgs>
     {
         ResizePaneArgs() = default;
-        GETSET_PROPERTY(Model::ResizeDirection, ResizeDirection, ResizeDirection::None);
+        GETSET_PROPERTY(Model::Direction, Direction, Direction::None);
 
         static constexpr std::string_view DirectionKey{ "direction" };
 
@@ -228,7 +228,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
             auto otherAsUs = other.try_as<ResizePaneArgs>();
             if (otherAsUs)
             {
-                return otherAsUs->_ResizeDirection == _ResizeDirection;
+                return otherAsUs->_Direction == _Direction;
             }
             return false;
         };
@@ -236,8 +236,8 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         {
             // LOAD BEARING: Not using make_self here _will_ break you in the future!
             auto args = winrt::make_self<ResizePaneArgs>();
-            JsonUtils::GetValueForKey(json, DirectionKey, args->_ResizeDirection);
-            if (args->_ResizeDirection == ResizeDirection::None)
+            JsonUtils::GetValueForKey(json, DirectionKey, args->_Direction);
+            if (args->_Direction == Direction::None)
             {
                 return { nullptr, { SettingsLoadWarnings::MissingRequiredParameter } };
             }
@@ -249,7 +249,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         IActionArgs Copy() const
         {
             auto copy{ winrt::make_self<ResizePaneArgs>() };
-            copy->_ResizeDirection = _ResizeDirection;
+            copy->_Direction = _Direction;
             return *copy;
         }
     };
@@ -257,10 +257,10 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
     struct MoveFocusArgs : public MoveFocusArgsT<MoveFocusArgs>
     {
         MoveFocusArgs() = default;
-        MoveFocusArgs(Model::FocusDirection direction) :
-            _FocusDirection{ direction } {};
+        MoveFocusArgs(Model::Direction direction) :
+            _Direction{ direction } {};
 
-        GETSET_PROPERTY(Model::FocusDirection, FocusDirection, FocusDirection::None);
+        GETSET_PROPERTY(Model::Direction, Direction, Direction::None);
 
         static constexpr std::string_view DirectionKey{ "direction" };
 
@@ -272,7 +272,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
             auto otherAsUs = other.try_as<MoveFocusArgs>();
             if (otherAsUs)
             {
-                return otherAsUs->_FocusDirection == _FocusDirection;
+                return otherAsUs->_Direction == _Direction;
             }
             return false;
         };
@@ -280,8 +280,8 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         {
             // LOAD BEARING: Not using make_self here _will_ break you in the future!
             auto args = winrt::make_self<MoveFocusArgs>();
-            JsonUtils::GetValueForKey(json, DirectionKey, args->_FocusDirection);
-            if (args->_FocusDirection == FocusDirection::None)
+            JsonUtils::GetValueForKey(json, DirectionKey, args->_Direction);
+            if (args->_Direction == Direction::None)
             {
                 return { nullptr, { SettingsLoadWarnings::MissingRequiredParameter } };
             }
@@ -293,7 +293,7 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         IActionArgs Copy() const
         {
             auto copy{ winrt::make_self<MoveFocusArgs>() };
-            copy->_FocusDirection = _FocusDirection;
+            copy->_Direction = _Direction;
             return *copy;
         }
     };

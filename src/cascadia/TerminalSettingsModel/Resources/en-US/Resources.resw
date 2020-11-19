@@ -335,4 +335,10 @@
   <data name="ToggleRetroEffectCommandKey" xml:space="preserve">
     <value>Toggle retro terminal effect</value>
   </data>
+  <data name="NextPaneCommandKey" xml:space="preserve">
+    <value>Next pane</value>
+  </data>
+  <data name="PrevPaneCommandKey" xml:space="preserve">
+    <value>Previous pane</value>
+  </data>
 </root>

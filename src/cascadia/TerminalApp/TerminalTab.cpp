@@ -315,11 +315,30 @@ namespace winrt::TerminalApp::implementation
     // - direction: The direction to move the separator in.
     // Return Value:
     // - <none>
-    void TerminalTab::ResizePane(const ResizeDirection& direction)
+    void TerminalTab::ResizePane(const Direction& direction)
     {
         // NOTE: This _must_ be called on the root pane, so that it can propagate
         // throughout the entire tree.
         _rootPane->ResizePane(direction);
+    }
+
+
+    // Method Description:
+    // - Focuses either the last or most recently used pane
+    // Arguments:
+    // - focusNext: if true we focus the most recently used pane, 
+    //              if false we focus the least recently used pane
+    void TerminalTab::FocusPane(const bool focusNext)
+    {
+        if (focusNext)
+        {
+            // To get to the most recently used pane, get the id of that pane and focus to that
+            _rootPane->FocusPane(_mruPanes.GetAt(1));
+        }
+        else
+        {
+            _rootPane->FocusPane(_mruPanes.GetAt(_mruPanes.Size() - 1));
+        }
     }
 
     // Method Description:
@@ -329,23 +348,11 @@ namespace winrt::TerminalApp::implementation
     // - direction: The direction to move the focus in.
     // Return Value:
     // - <none>
-    void TerminalTab::NavigateFocus(const FocusDirection& direction)
+    void TerminalTab::NavigateFocus(const Direction& direction)
     {
-        if (direction == FocusDirection::Previous)
-        {
-            // To get to the previous pane, get the id of the previous pane and focus to that
-            _rootPane->FocusPane(_mruPanes.GetAt(1));
-        }
-        else if (direction == FocusDirection::Next)
-        {
-            _rootPane->FocusPane(_mruPanes.GetAt(_mruPanes.Size() - 1));
-        }
-        else
-        {
-            // NOTE: This _must_ be called on the root pane, so that it can propagate
-            // throughout the entire tree.
-            _rootPane->NavigateFocus(direction);
-        }
+        // NOTE: This _must_ be called on the root pane, so that it can propagate
+        // throughout the entire tree.
+        _rootPane->NavigateFocus(direction);
     }
 
     // Method Description:

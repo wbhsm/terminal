@@ -48,7 +48,9 @@ namespace Microsoft.Terminal.Settings.Model
         ToggleCommandPalette,
         CloseOtherTabs,
         CloseTabsAfter,
-        TabSearch
+        TabSearch,
+        NextPane,
+        PrevPane
     };
 
     [default_interface] runtimeclass ActionAndArgs {

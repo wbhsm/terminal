@@ -237,6 +237,16 @@ namespace winrt::TerminalApp::implementation
             _TabSearchHandlers(*this, eventArgs);
             break;
         }
+        case ShortcutAction::NextPane:
+        {
+            _NextPaneHandlers(*this, eventArgs);
+            break;
+        }
+        case ShortcutAction::PrevPane:
+        {
+            _PrevPaneHandlers(*this, eventArgs);
+            break;
+        }
         default:
             return false;
         }

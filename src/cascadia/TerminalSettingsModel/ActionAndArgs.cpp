@@ -46,6 +46,8 @@ static constexpr std::string_view ToggleFocusModeKey{ "toggleFocusMode" };
 static constexpr std::string_view ToggleFullscreenKey{ "toggleFullscreen" };
 static constexpr std::string_view TogglePaneZoomKey{ "togglePaneZoom" };
 static constexpr std::string_view ToggleRetroEffectKey{ "toggleRetroEffect" };
+static constexpr std::string_view NextPaneKey{ "nextPane" };
+static constexpr std::string_view PrevPaneKey{ "prevPane" };
 
 static constexpr std::string_view ActionKey{ "action" };
 
@@ -104,6 +106,8 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
         { ToggleFullscreenKey, ShortcutAction::ToggleFullscreen },
         { TogglePaneZoomKey, ShortcutAction::TogglePaneZoom },
         { ToggleRetroEffectKey, ShortcutAction::ToggleRetroEffect },
+        { NextPaneKey, ShortcutAction::NextPane },
+        { PrevPaneKey, ShortcutAction::PrevPane },
         { UnboundKey, ShortcutAction::Invalid },
     };
 
@@ -298,6 +302,8 @@ namespace winrt::Microsoft::Terminal::Settings::Model::implementation
                 { ShortcutAction::ToggleFullscreen, RS_(L"ToggleFullscreenCommandKey") },
                 { ShortcutAction::TogglePaneZoom, RS_(L"TogglePaneZoomCommandKey") },
                 { ShortcutAction::ToggleRetroEffect, RS_(L"ToggleRetroEffectCommandKey") },
+                { ShortcutAction::NextPane, RS_(L"NextPaneCommandKey") },
+                { ShortcutAction::PrevPane, RS_(L"PrevPaneCommandKey") },
             };
         }();
 

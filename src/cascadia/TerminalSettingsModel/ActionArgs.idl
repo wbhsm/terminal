@@ -16,24 +16,13 @@ namespace Microsoft.Terminal.Settings.Model
         IActionArgs ActionArgs { get; };
     };
 
-    enum ResizeDirection
+    enum Direction
     {
         None = 0,
         Left,
         Right,
         Up,
         Down
-    };
-
-    enum FocusDirection
-    {
-        None = 0,
-        Left,
-        Right,
-        Up,
-        Down,
-        Previous,
-        Next
     };
 
     enum SplitState
@@ -100,13 +89,13 @@ namespace Microsoft.Terminal.Settings.Model
 
     [default_interface] runtimeclass ResizePaneArgs : IActionArgs
     {
-        ResizeDirection ResizeDirection { get; };
+        Direction Direction { get; };
     };
 
     [default_interface] runtimeclass MoveFocusArgs : IActionArgs
     {
-        MoveFocusArgs(FocusDirection direction);
-        FocusDirection FocusDirection { get; };
+        MoveFocusArgs(Direction direction);
+        Direction Direction { get; };
     };
 
     [default_interface] runtimeclass AdjustFontSizeArgs : IActionArgs
